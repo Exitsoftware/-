@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// acmicpc 문제 2167
+
 int main(){
 	int count = 0;
 	int arr[300][300] = {0};
@@ -20,10 +22,9 @@ int main(){
 	for(int i = 0; i < count; i++){
 		int sum = 0;
 		scanf("%d %d %d %d", &x, &y, &x1, &y1);
-		x--;
-		y--;
-		for(int j = x; j < x1; j++){
-			for(int k = y; k < y1; k++){
+
+		for(int j = x - 1; j < x1; j++){
+			for(int k = y - 1; k < y1; k++){
 				sum += arr[j][k];
 			}
 		}
