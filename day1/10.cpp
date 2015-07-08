@@ -16,35 +16,6 @@ int len(int num){
 }
 
 
-// void func(int arr[], int length){
-// 	bool sw = false;
-// 	for(int i = 0; i < length; i++){
-// 		if(arr[i] < arr[0]){
-// 			int temp = arr[0];
-// 			arr[0] = arr[i];
-// 			arr[i] = temp;
-// 			sw = true;
-// 			break;
-// 		}
-// 	}
-
-// 	if(sw){
-// 		func(arr, length);
-// 	}
-// 	else{
-// 		for(int i = 0; i < length; i++){
-// 			printf("%d", arr[i]);
-// 		}
-// 		// for (int i = length - 1; i >= 0; i--)
-// 		// {
-// 		// 	printf("%d", arr[i]);
-// 		// }
-// 		printf("\n");
-// 	}
-
-
-// }
-
 
 int main()
 {
@@ -62,38 +33,52 @@ int main()
 		int input;
 
 		scanf("%d",&input);
-		// printf("%d\n", len(input));
 		int temp_input = input;
-		// int end_num = temp_input % 10;
-		// int temp_num;
-		// temp_input /= 10;
-
-
 
 		int arr[100000];
 
+		// 배열 생성
 		for(int i = 0; i < len(input); i++){
 			arr[i] = temp_input%10;
 			temp_input /= 10;
 			
 		}
 
+
+		// index 1 찾기
+		int index1;
+		int index2;
+
+
 		bool sw = false;
-		for(int i = 0; i < len(input); i++){
-			for(int j = 0; j < i; j++){
-				if(arr[i] > arr[j]){
-					
+		for(int i = 0; i < len(input)-1; i++){
+			if(arr[i] > arr[i+1]){
+				index1 = i+1;
+				sw = true;
+				break;
+			}
+		}
+
+		// index2 찾기
+		for(int i = 0; i < len(input)-1; i++){
+			if(arr[i] > arr[index1]){
+				index2 = i;
+				break;
+			}
+		}
+
+
+		char temp = arr[index1];
+		arr[index1] = arr[index2];
+		arr[index2] = temp;
+
+		for(int i = 0; i < index1 - 1; i++){
+			for(int j = 0; j < index1 - i - 1; j++){
+				if(arr[j] < arr[j+1]){
+					char temp = arr[j];
+					arr[j] = arr[j+1];
+					arr[j+1] = temp;
 				}
-
-
-				if(arr[i] < arr[0]){
-					int temp = arr[0];
-					arr[0] = arr[i];
-					arr[i] = temp;
-					sw = true;
-					break;
-				}
-
 			}
 		}
 
@@ -111,41 +96,41 @@ int main()
 
 
 
-		156
-		165
+		// 156
+		// 165
 
 
-		31475
+		// 31475
 
-		31547
+		// 31547
 
-		31286795999
-		31286975
+		// 31286795999
+		// 31286975
 
-		795
-		975
-
-
-		156
-		165
-		31526789
+		// 795
+		// 975
 
 
-
-
-
-		// 4 1 4 7 5
-		41745
-		41574
+		// 156
+		// 165
+		// 31526789
 
 
 
-		312 8787878 4
-		314
 
-		4 1 5 7 4
 
-		4 1 5 4 7
+		// // 4 1 4 7 5
+		// 41745
+		// 41574
+
+
+
+		// 312 8787878 4
+		// 314
+
+		// 4 1 5 7 4
+
+		// 4 1 5 4 7
 
 		// 4 1 5 7 4
 
