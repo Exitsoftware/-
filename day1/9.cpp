@@ -1,3 +1,9 @@
+/*
+
+VC, GCC에서 사용
+
+*/
+
 #include <stdio.h>
 
 int main()
@@ -13,22 +19,26 @@ int main()
 
 		printf("#testcase%d\n",itr+1);
 
-		int map[9][9] = {0};
-		int max = 0;
-		int max_x, max_y;
+
+		char str[10];
+		scanf("%s", str);
+		int max_count = 0;
+		int count = 1;
 
 		for(int i = 0; i < 9; i++){
-			for(int j = 0; j < 9; j++){
-				scanf("%d", &map[i][j]);
-				if(map[i][j] > max){
-					max = map[i][j];
-					max_x = i+1;
-					max_y = j+1;
+			if(str[i] == str[i+1]){
+				count++;
+			}
+			else{
+				if(max_count < count){
+					max_count = count;
 				}
+				count = 1;
 			}
 		}
-		printf("%d\n", max);
-		printf("%d %d\n", max_x, max_y);
+
+		printf("%d\n", max_count);
+
 
 	}
 

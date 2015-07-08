@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// 문자열 입력
+// 문자열 입
 
 int main(){
 	char str[100][100];
