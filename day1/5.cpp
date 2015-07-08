@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// 이차원 배열
+
 int main(){
 	int arr[5][10];
 	int count = 0;
