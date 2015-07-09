@@ -1,0 +1,67 @@
+#include <iostream>
+using namespace std;
+
+int top=-1;
+int count_num=0;
+int stack[1000];
+
+void push() {
+	top++;
+	count_num++;
+	stack[top]=count_num;	
+}
+int pop() {
+	top--;
+	return stack[top+1];
+}
+
+int main()
+{
+
+	int itr;
+	int nCount;		/* 문제의 테스트 케이스 */
+
+	cin >> nCount;	/* 테스트 케이스 입력 */
+
+	for(itr=0; itr<nCount; itr++)
+	{
+
+		cout << "#testcase" << (itr+1) << endl;
+
+
+		int n;
+		int num, max=0;
+		bool no=false;
+
+		cin >> n;
+
+		for(int i=0; i<n; i++) {
+			cin >> num;
+
+	        if (num > max) {
+	            for (int i = 0; i < num - max; i++) {
+	                push();
+	            }
+	            pop();
+	            max = num;
+	        }
+	        else if (stack[top] == num) {
+	            pop();
+	        }
+	        else {
+	            no=true;
+	        }
+	    }
+	    if(!no) {
+		    cout << "Yes" << endl;
+	    } else {
+		    cout << "No" << endl;
+		}
+				    count_num=0;
+		    top=-1;
+		cout << endl;
+	}
+
+	return 0;	/* 반드시 return 0으로 해주셔야합니다. */ 
+
+}

@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+int main()
+{
+	int itr;
+	int nCount;		/* 문제의 테스트 케이스 */
+
+	scanf("%d", &nCount);	/* 테스트 케이스 입력 */
+
+	for(itr=0; itr<nCount; itr++)
+	{
+
+		printf("#testcase%d\n",itr+1);
+		int arr[2000];
+		int n, m;
+		int m_count=1;
+		
+		scanf("%d %d", &n, &m);
+
+		for(int i=0; i<n; i++) {
+			arr[i]=m_count++;
+		}
+		
+		int i=0, result_count=0;
+		m_count=1;
+		while(1) {
+			if(arr[i%n]==0)
+				m_count--;
+			if(m_count==m) {
+				printf("%d ", arr[i%n]);
+				arr[i%n]=0;
+				m_count=0;
+				result_count++;
+			}
+			m_count++;
+			i++;
+			if(result_count==n)
+				break;
+		}
+		printf("\n");
+	}
+
+	return 0;	/* 반드시 return 0으로 해주셔야합니다. */ 
+
+}

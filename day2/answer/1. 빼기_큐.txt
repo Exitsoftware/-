@@ -1,0 +1,63 @@
+#include <stdio.h>
+
+int front=0, rear=0;
+char queue[1000];
+
+void enqueue(int n) {
+	queue[rear++]=n;	
+}
+char dequeue() {
+	return queue[front++];
+}
+bool isEmpty() {
+	if(front==rear)
+		return true;
+	else
+		return false;
+}
+
+int main()
+{
+
+	int itr;
+	int nCount;		/* 문제의 테스트 케이스 */
+
+	scanf("%d", &nCount);	/* 테스트 케이스 입력 */
+
+	for(itr=0; itr<nCount; itr++)
+	{
+
+		printf("#testcase%d\n",itr+1);
+
+		int n;
+		char input[2];
+		bool no=false;
+		
+		scanf("%d",&n);
+		
+		while(n--) {
+			scanf("%s",input);
+
+			if(input[0]=='-') {
+				if(isEmpty()) {
+					no=true;
+					break;
+				} else {
+					dequeue();
+				}
+			} else {
+				enqueue(input[0]);
+			}
+		}
+		if(no) {
+			printf("error!\n");
+		} else {
+			for(int i=front; i<rear; i++)
+				printf("%c\n", queue[i]);
+		}
+		front=rear=0;
+	}
+
+	return 0;	/* 반드시 return 0으로 해주셔야합니다. */ 
+
+}

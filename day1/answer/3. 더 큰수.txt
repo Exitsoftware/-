@@ -1,0 +1,55 @@
+#include <stdio.h>
+
+int main()
+{
+	int itr;
+	int nCount;		/* 문제의 테스트 케이스 */
+
+	scanf("%d", &nCount);	/* 테스트 케이스 입력 */
+
+	for(itr=0; itr<nCount; itr++)
+	{
+		printf("#testcase%d\n",itr+1);
+
+		char num[7]={};
+		int length=0, index1=0, index2=0;
+
+		scanf("%s", num);
+		
+		for(int i=0; i<6; i++)	// strlen()과 동일
+			if(num[i]!=NULL) 
+				length++;
+
+		index1 = length;
+		index2 = length;
+
+		while(num[index1-1]<=num[index1-2]) // 뒤에서부터 증가가 멈추는 위치
+			index1--;
+
+		index1=index1-2;
+		if(index1<0) {
+			printf("0\n");
+			continue;
+		}
+
+		while(num[index1]>num[index2])	// 뒤에서 부터 index1 보다 큰 첫번째 수의 위치
+			index2--;
+		
+		char temp = num[index1];		// swap
+		num[index1]=num[index2];
+		num[index2]=temp;
+
+		for(int i=index1+1; i<length; i++) {		//sorting
+			for(int j=i+1; j<length;j++) {
+				if(num[i]>num[j]) {
+					temp = num[i];
+					num[i]=num[j];
+					num[j]=temp;
+				}
+			}
+		}
+
+		printf("%s\n",num);
+	}
+	return 0;	/* 반드시 return 0으로 해주셔야합니다. */ 
+}
