@@ -20,22 +20,22 @@ int dequeue(){
 }
 
 int kill_num(int n){
-	
-	if((rear - front) == 1){
-		sw = true;
-		return queue[0];
-	}
+	n--;
+	// if((rear - front) == 1){
+	// 	sw = true;
+	// 	return queue[0];
+	// }
 	
 
 	// if(n > rear-front){
-		n = (n % (rear-front)) -1;
+	n = (n % (rear-front));
 
 	// }
 	// else{
 	// 	n--;
 	// }
 	
-	if(n >= 0){
+	// if(n >= 0){
 		// printf("n %d\n", n);
 		int val = queue[n];
 		for(int i = n; i < rear+1; i++){
@@ -44,13 +44,13 @@ int kill_num(int n){
 		rear--;
 
 		return val;
-	}
+	// }
 
 }
 
 
 void shift(int num){
-	if(rear != front){
+	// if(rear != front){
 		for(int i = 0; i < num; i++){
 			int temp = queue[0];
 			for(int j = 0; j < rear; j++){
@@ -64,7 +64,7 @@ void shift(int num){
 			printf("%d ", queue[i]);
 		}
 		printf("\n");
-	}
+	// }
 
 }
 
