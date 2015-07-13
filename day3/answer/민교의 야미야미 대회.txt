@@ -1,0 +1,48 @@
+#include <stdio.h>
+
+int total_round;
+
+void battle(int win_count,int lose_count,char* result) {
+	if(win_count==0) {
+		for(int i=0; result[i]!=NULL ; i++)
+			printf("%c", result[i]);
+		printf("\n");
+		return;
+	} else if (lose_count==0) {
+		return;
+	}
+
+	char temp_result[100]={};
+	
+	for(int i=0; i<100; i++)
+		temp_result[i]=result[i];
+
+	temp_result[total_round - (win_count + lose_count - 1)] = 'o';
+	battle(win_count-1,lose_count,temp_result);
+	temp_result[total_round - (win_count + lose_count - 1)] = 'x';
+	battle(win_count,lose_count-1,temp_result);
+}
+
+int main()
+{
+
+	int itr;
+	int nCount;		/* 문제의 테스트 케이스 */
+
+	scanf("%d", &nCount);	/* 테스트 케이스 입력 */
+
+	for(itr=0; itr<nCount; itr++)
+	{
+		char result[100]={};
+		
+		printf("#testcase%d\n",itr+1);
+		int win_count;
+
+		scanf("%d",&win_count);
+		total_round=win_count*2 - 1;
+		battle(win_count,win_count,result);
+	}
+
+	return 0;	/* 반드시 return 0으로 해주셔야합니다. */ 
+
+}

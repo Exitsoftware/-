@@ -1,0 +1,52 @@
+/*
+
+VCPP, GPP에서 사용
+
+*/
+
+#include <iostream>
+using namespace std;
+
+void recur(int n, int d) {
+	if(n == 1){
+		cout<<n%d;
+		return;
+	}
+	else if( n == 0)
+		return;
+	recur(n/d, d);
+	if(n%d <10)
+		cout<<n%d;
+	else {
+		printf("%c", n%d+55);
+	}
+}
+
+int main()
+{
+
+	int nCount;		/* 문제의 테스트 케이스 */
+
+	cin >> nCount;	/* 테스트 케이스 입력 */
+
+	for(int itr=0; itr<nCount; itr++)
+	{
+
+		int n, m;
+		printf("#testcase%d\n",itr+1);
+
+		/*
+
+		알고리즘이 들어가는 부분
+
+		*/
+		cin>>n>>m;
+
+		recur(n , m);
+		cout<<endl;
+
+	}
+
+	return 0;	/* 반드시 return 0으로 해주셔야합니다. */ 
+
+}

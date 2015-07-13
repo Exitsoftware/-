@@ -1,0 +1,140 @@
+#include <iostream>
+
+using namespace std;
+
+int clock[15];
+
+void push(int n) {
+	if(n==0) {
+		clock[0]==12?clock[0]=3:clock[0]+=3;
+		clock[1]==12?clock[1]=3:clock[1]+=3;
+		clock[2]==12?clock[2]=3:clock[2]+=3;	
+	} else if (n==1) {
+		clock[3]==12?clock[3]=3:clock[3]+=3;
+		clock[7]==12?clock[7]=3:clock[7]+=3;
+		clock[9]==12?clock[9]=3:clock[9]+=3;	
+		clock[11]==12?clock[11]=3:clock[11]+=3;	
+	} else if (n==2) {
+		clock[4]==12?clock[4]=3:clock[4]+=3;
+		clock[10]==12?clock[10]=3:clock[10]+=3;
+		clock[14]==12?clock[14]=3:clock[14]+=3;	
+		clock[15]==12?clock[15]=3:clock[15]+=3;	
+	} else if (n==3) {
+		clock[0]==12?clock[0]=3:clock[0]+=3;
+		clock[4]==12?clock[4]=3:clock[4]+=3;
+		clock[5]==12?clock[5]=3:clock[5]+=3;	
+		clock[6]==12?clock[6]=3:clock[6]+=3;
+		clock[7]==12?clock[7]=3:clock[7]+=3;
+	} else if (n==4) {
+		clock[6]==12?clock[6]=3:clock[6]+=3;
+		clock[7]==12?clock[7]=3:clock[7]+=3;
+		clock[8]==12?clock[8]=3:clock[8]+=3;	
+		clock[10]==12?clock[10]=3:clock[10]+=3;	
+		clock[12]==12?clock[12]=3:clock[12]+=3;	
+	} else if (n==5) {
+		clock[0]==12?clock[0]=3:clock[0]+=3;
+		clock[2]==12?clock[2]=3:clock[2]+=3;
+		clock[14]==12?clock[14]=3:clock[14]+=3;	
+		clock[15]==12?clock[15]=3:clock[15]+=3;	
+	} else if (n==6) {
+		clock[3]==12?clock[3]=3:clock[3]+=3;
+		clock[14]==12?clock[14]=3:clock[14]+=3;
+		clock[15]==12?clock[15]=3:clock[15]+=3;	
+	} else if (n==7) {
+		clock[4]==12?clock[4]=3:clock[4]+=3;
+		clock[5]==12?clock[5]=3:clock[5]+=3;
+		clock[7]==12?clock[7]=3:clock[7]+=3;	
+		clock[14]==12?clock[14]=3:clock[14]+=3;	
+		clock[15]==12?clock[15]=3:clock[15]+=3;	
+	} else if (n==8) {
+		clock[1]==12?clock[1]=3:clock[1]+=3;
+		clock[2]==12?clock[2]=3:clock[2]+=3;
+		clock[3]==12?clock[3]=3:clock[3]+=3;	
+		clock[4]==12?clock[4]=3:clock[4]+=3;	
+		clock[5]==12?clock[5]=3:clock[5]+=3;	
+	} else if (n==9) {
+		clock[3]==12?clock[3]=3:clock[3]+=3;
+		clock[4]==12?clock[4]=3:clock[4]+=3;
+		clock[5]==12?clock[5]=3:clock[5]+=3;	
+		clock[9]==12?clock[9]=3:clock[9]+=3;	
+		clock[13]==12?clock[13]=3:clock[13]+=3;
+	}
+
+}
+
+int main()
+{
+	int min=9999999;
+	int nCount;		/* 문제의 테스트 케이스 */
+
+	cin >> nCount;	/* 테스트 케이스 입력 */
+
+	for(int itr=0; itr<nCount; itr++)
+	{
+
+		cout << "#testcase" << (itr+1) << endl;
+
+		for(int i=0; i<16; i++)
+			cin >> clock[i];
+
+		if(clock[8]!=clock[12]) {
+			cout << -1 << endl;
+			return 0;
+		}
+		int count9=0;
+		while(clock[13]!=12) {
+			count9++;
+			push(9);
+		}
+		for(int i0=0; i0<4; i0++) {
+			for(int i1=0; i1<4; i1++) {
+				for(int i2=0; i2<4; i2++) {
+					for(int i3=0; i3<4; i3++) {
+						for(int i4=0; i4<4; i4++) {
+							for(int i5=0; i5<4; i5++) {
+								for(int i6=0; i6<4; i6++) {
+									for(int i7=0; i7<4; i7++) {
+										for(int i8=0; i8<4; i8++) {
+											
+											int count=0;
+											
+											for(int k=0; k<16; k++)
+												if(clock[k]==12)
+													count++;
+
+											if(count==16) {
+												int tmp=i0+i1+i2+i3+i4+i5+i6+i7+i8+count9;
+												if(min>tmp)
+													min=tmp;
+											}
+											
+											push(8);
+										}
+										push(7);
+									}
+									push(6);
+								}
+								push(5);
+							}
+							push(4);
+						}
+						push(3);
+					}
+					push(2);
+				}
+				push(1);
+			}
+			push(0);
+		}
+		
+		if(min==9999999) {
+			cout << -1 << endl;
+		} else {
+			cout << min << endl;
+			min=9999999;
+		}
+	}
+
+	return 0;	/* 반드시 return 0으로 해주셔야합니다. */ 
+
+}
