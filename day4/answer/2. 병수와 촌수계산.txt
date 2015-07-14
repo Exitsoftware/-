@@ -1,0 +1,66 @@
+/*
+
+VC, GCC에서 사용
+
+*/
+
+#include <stdio.h>
+
+int n, t, start, end;
+int graph[101][101] = {0};
+int visited[101] = {0};
+int result = -1;
+
+void calc(int v, int count) {
+	if(v == end) {
+		result = count;
+		return;
+	}
+	
+	for(int i=1; i<=n; i++)
+		if(graph[v][i] == 1 && visited[i] == 0) {
+			visited[i] = 1;
+			calc(i,count+1);
+		}
+
+}
+
+int main()
+{
+
+	int itr;
+	int nCount;		/* 문제의 테스트 케이스 */
+
+	scanf("%d", &nCount);	/* 테스트 케이스 입력 */
+
+	for(itr=0; itr<nCount; itr++)
+	{
+		
+		printf("#testcase%d\n",itr+1);
+
+		int x, y;
+
+		for(int i=0; i<101; i++) {
+			for(int j=0; j<101; j++)
+				graph[i][j] = 0;
+			visited[i] = 0;		
+		}
+		result = -1;
+		
+		scanf("%d", &n);
+		scanf("%d %d", &start, &end);
+		scanf("%d", &t);
+
+		while(t--) {
+			scanf("%d %d", &x, &y);
+			graph[x][y] = graph[y][x] = 1;
+		}
+		
+		visited[start] = 1;
+		calc(start, 0);
+		printf("%d\n",result);
+	}
+
+	return 0;	/* 반드시 return 0으로 해주셔야합니다. */ 
+
+}

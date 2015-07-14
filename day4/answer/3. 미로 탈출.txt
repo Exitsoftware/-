@@ -1,0 +1,78 @@
+#include <stdio.h>
+
+int queue[10000];
+int f = 0, r = 0;
+
+void enqueue(int n) {
+	queue[r++]=n;
+}
+int dequeue() {
+	return queue[f++];
+}
+bool empty() {
+	return f==r;
+}
+
+int map[22][22];
+
+int main()
+{
+
+	int itr;
+	int nCount;		/* 문제의 테스트 케이스 */
+
+	scanf("%d", &nCount);	/* 테스트 케이스 입력 */
+
+	for(itr=0; itr<nCount; itr++)
+	{
+
+		printf("#testcase%d\n",itr+1);
+
+		int n,m;
+		
+		for(int i=0; i<22; i++)
+			for(int j=0; j<22; j++)
+				map[i][j] = -1;
+				
+		scanf("%d %d", &n, &m);
+	
+		for(int i=1; i<=n; i++)
+			for(int j=1; j<=m; j++) {
+				scanf("%d", &map[i][j]);
+				if(map[i][j]==1)
+					map[i][j]=-2;
+			}
+		
+		map[n][1] = 1;
+		enqueue(n*100+1);
+		
+		while(!empty()) {
+			int temp = dequeue();
+			int x = temp/100;
+			int y = temp%100;
+			temp = map[x][y];
+			
+			if(map[x+1][y] == 0) {
+				map[x+1][y] = temp+1;
+				enqueue((x+1)*100+y);
+			}
+			if(map[x-1][y] == 0) {
+				map[x-1][y] = temp+1;
+				enqueue((x-1)*100+y);
+			}
+			if(map[x][y+1] == 0) {
+				map[x][y+1] = temp+1;
+				enqueue(x*100+y+1);
+			}
+			if(map[x][y-1] == 0) {
+				map[x][y-1] = temp+1;
+				enqueue(x*100+y-1);
+			}
+		}
+		
+		printf("%d\n", map[1][m]);
+	}
+
+	return 0;	/* 반드시 return 0으로 해주셔야합니다. */ 
+
+}

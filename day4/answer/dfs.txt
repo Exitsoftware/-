@@ -1,0 +1,26 @@
+#include <stdio.h>
+ 
+int n;
+int graph[11][11] = {0};
+int visited[11] = {0};
+ 
+void dfs(int k) {
+    visited[k] = 1;
+    printf("%d ", k);
+ 
+    for(int i=1; i<=n ; i++)
+        if(graph[k][i] == 1 && visited[i] ==0)
+            dfs(i);
+}
+ 
+int main() {
+    int start;
+    int x,y;
+ 
+    scanf("%d %d", &n, &start);
+ 
+    while(scanf("%d %d", &x, &y) != EOF)
+        graph[x][y] = graph[y][x] = 1;
+ 
+    dfs(start);
+}

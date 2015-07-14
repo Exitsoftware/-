@@ -1,0 +1,82 @@
+#include <stdio.h>
+ 
+int queue[10000];
+int f=0, r=0;
+int map[102][102];
+ 
+void enqueue(int n) {
+    queue[r]=n;
+    r++;
+}
+ 
+int dequeue() {
+    f++;
+    return queue[f-1];
+}
+ 
+bool empty() {
+    if(f==r)
+        return true;
+    else
+        return false;
+}
+ 
+int main() {
+    int n, x, y, time;
+    for(int i=0; i<102 ; i++)
+        for(int j=0; j<102; j++)
+            map[i][j]=-1;
+ 
+    scanf("%d", &n);
+ 
+    for(int i=1; i<=n ; i++)
+        for(int j=1; j<=n; j++) {
+            scanf("%d", &map[i][j]);
+            if(map[i][j] == 1) {
+                map[i][j] = -2;
+            }
+        }
+ 
+    scanf("%d %d", &y, &x);
+    scanf("%d", &time);
+ 
+    map[x][y]=1;
+    enqueue(x*1000+y);
+     
+    while(!empty()) {
+        int temp = dequeue();
+        int x1 = temp/1000;
+        int y1 = temp%1000;
+ 
+        temp = map[x1][y1];
+ 
+        if(map[x1+1][y1] == 0) {
+            map[x1+1][y1] = temp+1;
+            enqueue((x1+1)*1000+y1);
+        }
+        if(map[x1-1][y1] == 0) {
+            map[x1-1][y1] = temp+1;
+            enqueue((x1-1)*1000+y1);
+        }
+        if(map[x1][y1+1] == 0) {
+            map[x1][y1+1] = temp+1;
+            enqueue(x1*1000+y1+1);
+        }
+        if(map[x1][y1-1] == 0) {
+            map[x1][y1-1] = temp+1;
+            enqueue(x1*1000+y1-1);
+        }
+    }
+ 
+ 
+    int count = 0;
+    for(int i=1; i<=n ; i++)
+        for(int j=1; j<=n; j++)
+            if(map[i][j] == time+1)
+                count++;
+ 
+    if(count != 0)
+        printf("%d\n",count);
+    else
+        printf("OH, MY GOD\n");
+}

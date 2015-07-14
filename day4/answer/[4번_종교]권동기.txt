@@ -1,0 +1,103 @@
+#include <iostream>
+using namespace std;
+
+struct list{
+	int a;
+	list *b;
+};
+
+list *A[50001];
+bool visit[50001];
+
+void dfs(int n, int cur){
+	visit[cur] = true;
+
+	list *temp = A[cur];
+	/*if(cur == 1){
+		while(temp != NULL){
+			cout << temp->a << " " ;//endl;
+			temp = temp->b;
+		}
+	}*/
+
+	while(temp != NULL){
+		//cout << cur << " "<<  temp->a << endl;
+		int qp = temp->a;
+		if(!visit[qp])
+			dfs(n, qp);
+
+		temp = temp->b;
+	}
+}
+		
+ 
+
+int main()
+{
+
+	int nCount;		/* 문제의 테스트 케이스 */
+
+	cin >> nCount;	/* 테스트 케이스 입력 */
+
+	for(int itr=0; itr<nCount; itr++)
+	{
+
+		cout << "#testcase" << (itr+1) << endl;
+
+		int n, m;
+		cin >> n >> m;
+
+		for(int i=1; i<=n;i++){
+			A[i] = NULL;
+			//A[i]->b = NULL;
+			visit[i] = false;
+		}
+
+		int a, b;
+
+		for(int i=0; i<m; i++){
+			cin >> a >> b;
+
+			if(A[a] == NULL){
+				list *B = new list();
+				B->a = b;
+				B->b = NULL;
+
+				A[a] = B;
+			}else{
+				list *B = new list();
+				B->b = A[a]->b;
+				B->a = b;
+				A[a]->b = B;
+			}
+
+			if(A[b] == NULL){
+				list *C = new list();
+				C->a = a;
+				C->b = NULL;
+
+				A[b] = C;
+			}else{
+				list *C = new list();
+				C->b = A[b] ->b;
+				C->a = a;
+				A[b]->b = C;
+			}
+		}
+
+		int num = 0;
+		for(int i=1; i<= n; i++){
+			if(!visit[i]){
+				num++;
+				dfs(n, i);
+			}
+		}
+
+		cout << num << endl;
+		
+
+	}
+
+	return 0;	/* 반드시 return 0으로 해주셔야합니다. */ 
+
+}
