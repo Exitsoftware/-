@@ -60,8 +60,8 @@ void func(int index){
 	// printf("%d ", index);
 
 	for(int j = 1; j <= num; j++){
-		if(arr[index][j] != -1){
-			arr[index][j] = 0;
+		if(arr[index][j] > 0){
+			arr[index][j]--;
 		}
 	}
 
@@ -79,13 +79,16 @@ int main(){
 	int child;
 
 	while(scanf("%d %d", &parent, &child) != EOF){
-		arr[parent][child] = 1;
+		if(parent == -1){
+			break;
+		}
+		arr[parent][child]++;
 	}
 	// for(int i = 0; i < 8; i++){
 	// 	scanf("%d %d", &parent, &child);
 	// 	arr[parent][child] = 1;
 	// }
-	// print_arr();
+	print_arr();
 	// printf("\n");
 	// printf("%d\n", search_top_node());
 	// print_arr();
