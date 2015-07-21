@@ -5,10 +5,10 @@ VC, GCC에서 사용
 */
 
 #include <stdio.h>
-#define SIZE 101
+#define SIZE 103
 
-int arr[SIZE][SIZE] = {0};
-int result = 0;
+long arr[SIZE][SIZE] = {0};
+long result = 0;
 
 void init(){
 	for(int i = 0; i < SIZE; i++){
@@ -28,7 +28,7 @@ void init(){
 void print_arr(){
 	for(int i = 0; i < SIZE; i++){
 		for(int j = 0; j < SIZE; j++){
-			printf("%3d", arr[i][j]);
+			printf("%3ld", arr[i][j]);
 		}
 		printf("\n");
 	}
@@ -37,16 +37,22 @@ void print_arr(){
 void add_paper(int a, int b){
 	for(int i = a; i < a+10; i++){
 		for(int j = b; j < b+10; j++){
+			if(j >= SIZE){
+				break;
+			}
 			if(arr[i][j] == 0){
 				arr[i][j] = 1;
 			}
+		}
+		if(i >= SIZE){
+			break;
 		}
 	}
 }
 
 void func(int a, int b){
-	arr[a][b] = 0;
 	result++;
+	arr[a][b] = 0;
 
 	if(arr[a+1][b] == 1){
 		func(a+1,b);
@@ -62,6 +68,21 @@ void func(int a, int b){
 	if(arr[a][b-1] == 1){
 		func(a,b-1);
 	}
+
+	// if(arr[a+1][b] != 0){
+	// 	func(a+1,b);
+	// }
+	// if(arr[a-1][b] != 0){
+	// 	func(a-1,b);
+
+	// }
+	// if(arr[a][b+1] != 0){
+	// 	func(a,b+1);
+
+	// }
+	// if(arr[a][b-1] != 0){
+	// 	func(a,b-1);
+	// }
 }
 
 int main()
@@ -84,8 +105,8 @@ int main()
 		scanf("%d",&count);
 		int x, y;
 
-		int min_x = 9999, min_y = 9999;
-		int max_x = -1, max_y = -1;
+		long min_x = 9999, min_y = 9999;
+		long max_x = -1, max_y = -1;
 
 		for(int i = 0; i < count; i++){
 			scanf("%d %d", &y, &x);
@@ -115,14 +136,16 @@ int main()
 		// }
 		// print_arr();
 
-		for(int i = min_x; i < max_x+1; i++){
-			for(int j = min_y; j < max_y+1; j++){
+		for(int i = min_x-1; i < max_x+1; i++){
+			for(int j = min_y-1; j < max_y+1; j++){
 				if(arr[i][j] == 1){
 					func(i,j);
 				}
 			}
 		}
-		printf("%d\n", result);
+		// print_arr();
+
+		printf("%ld\n", result);
 
 
 
