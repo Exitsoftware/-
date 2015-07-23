@@ -77,13 +77,6 @@ void func(int n){
 
 		}
 
-		// for(int i = 0; i < num; i++){
-		// 	printf("%d ", arr[i]);
-		// 	result += arr[i];
-		// }
-		// printf("\n");
-
-
 		if(result == 0){
 			// printf("result = %d\n", result);
 
