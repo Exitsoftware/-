@@ -1,0 +1,121 @@
+#include <stdio.h>
+
+char cmd[10];
+char url[80];
+char now[80];
+char stack_b[100][80];
+char stack_f[100][80];
+int top_b = -1;
+int top_f = -1;
+
+int strlen(char* s) {
+	int len = 0;
+
+	while(*s) {
+		len++;
+		s++;
+	}
+	return len;
+}
+void strcpy(char* s1, char* s2) {
+	int len2 = strlen(s2);
+
+	for(int i=0; i<len2 ; i++) {
+		*(s1+i) = *(s2+i);
+	}
+	*(s1+len2) = 0;
+}
+bool strcmp(char* s1, char* s2) {
+	int len1 = strlen(s1);
+	int len2 = strlen(s2);
+
+	if(len1 != len2)
+		return false;
+
+	for(int i=0; i < len1; i++)
+		if(*(s1+i) != *(s2+i))
+			return false;
+
+	return true;
+}
+bool isEmpty_b() {
+	if(top_b == -1)
+		return true;
+	else
+		return false;
+}
+bool isEmpty_f() {
+	if(top_f == -1)
+		return true;
+	else
+		return false;
+}
+void push_b(char* s) {
+	strcpy(stack_b[++top_b],s);
+}
+void push_f(char* s) {
+	strcpy(stack_f[++top_f],s);
+}
+char* pop_b() {
+	if(!isEmpty_b())
+		return stack_b[top_b--];		
+}
+char* pop_f() {
+	if(!isEmpty_f())
+		return stack_f[top_f--];		
+}
+
+int main()
+{
+
+	int itr;
+	int nCount;		/* 문제의 테스트 케이스 */
+
+	scanf("%d", &nCount);	/* 테스트 케이스 입력 */
+
+	for(itr=0; itr<nCount; itr++)
+	{
+
+		printf("#testcase%d\n",itr+1);
+
+		strcpy(now,"https://secmem.org/");
+
+		while(1) {
+			scanf("%s", cmd);
+			if(strcmp(cmd,"VISIT"))
+				scanf("%s", url);
+		
+			if(strcmp(cmd,"QUIT"))
+				break;
+			else if(strcmp(cmd,"VISIT")) {
+				push_b(now);
+				strcpy(now,url);
+				top_f = -1;
+				printf("%s\n", now);
+			}
+			else if(strcmp(cmd,"BACK")) {
+				if(!isEmpty_b()) {
+					push_f(now);
+					strcpy(now,pop_b());
+					printf("%s\n", now);
+				}
+				else
+					printf("Ignored\n");					
+			}
+			else if(strcmp(cmd,"FORWARD")) {
+				if(!isEmpty_f()) {
+					push_b(now);
+					strcpy(now,pop_f());
+					printf("%s\n", now);
+				}
+				else
+					printf("Ignored\n");			
+			}			
+		}
+
+		top_b = top_f = -1;
+	}
+
+	return 0;	/* 반드시 return 0으로 해주셔야합니다. */ 
+
+}

@@ -129,6 +129,43 @@ char* strtok(char *s, char* delim){
 
 }
 
+char* strlwr(char *s){
+	int len = my_strlen(s);
+	for(int i = 0; i < len; i++){
+		if(s[i] >= 'A' && s[i] <= 'Z'){
+			s[i] = s[i] - 'A' + 'a';
+		}
+	}
+	return s;
+}
+
+char* strupr(char *s){
+	int len = my_strlen(s);
+	for(int i = 0; i < len; i++){
+		if(s[i] >= 'a' && s[i] <= 'z'){
+			s[i] = s[i] - 'a' + 'A';
+		}
+	}
+	return s;
+}
+
+
+char* replace(char* s, char* input, char* output){
+	int len = my_strlen(s);
+	int input_len = my_strlen(input);
+	int output_len = my_strlen(output);
+
+	for(int i = 0; i < len; i++){
+		if(s[i] == input[0]){
+			bool flag = true;
+			for(int j = 1; j < input_len; j++){
+				// if(s[i+j] == )
+			}
+		}
+	}
+	return s;
+}
+
 int main(){
 
 	char str1[100] = "Hello";
@@ -139,10 +176,12 @@ int main(){
 	my_strcpy(str1, str2);
 	printf("%s\n", str1);
 	char str3[100] = "AAA:BBB^CCC";
-	printf("%s\n", strtok(str3,":^"));
-	printf("%s\n", strtok(NULL,":^"));
-	printf("%s\n", strtok(NULL,":^"));
-
+	char delim[100] = ":^";
+	printf("%s\n", strtok(str3,delim));
+	printf("%s\n", strtok(NULL,delim));
+	printf("%s\n", strtok(NULL,delim));
+	printf("%s\n", strlwr(str1));
+	printf("%s\n", strupr(str1));
 
 	return 0;
 }
