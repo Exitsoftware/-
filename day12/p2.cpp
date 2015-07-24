@@ -7,18 +7,23 @@ VC, GCC에서 사용
 #include <stdio.h>
 
 int len;
-int result = 0;
 int arr[10010] = {0};
 int result[10010] = {0};
 // int up[3][10010] = {0};
 
+void init(){
+	for(int i = 0; i <= len+100; i++){
+		arr[i] = 0;
+		result[i] = 0;
+	}
+}
 
 int min_index(int index){
 	int min = 9999;
 	int min_i = 0;
-	for(int i = index + 1; i <= index + 3; i++){
-		if(min > arr[i]){
-			min = arr[i];
+	for(int i = index - 3; i <= index - 1; i++){
+		if(min > result[i]){
+			min = result[i];
 			min_i = i;
 		}
 	}
@@ -37,22 +42,37 @@ int min_index(int index){
 
 void func(){
 
-	for(int i = 1; i <= len; i++){
-		up[0][i] = up[0][i-1] + arr[i];
+	result[0] = arr[0];
+	result[1] = arr[1];
+	result[2] = arr[2];
+
+	for(int i = 3; i <= len+1; i++){
+		// int tmp_index = min_index(i);
+		// result[i] = result[tmp_index] + arr[i];
+
+		result[i] = result[i-1];
+		if(result[i] > result[i-2]) result[i] = result[i-2];
+		if(result[i] > result[i-3]) result[i] = result[i-3];
+		result[i] += arr[i];
 	}
 
-	for(int i = 2; i <= len; i++){
-		if(i % 2 == 0){
-			up[1][i] = up[1][i-2] + arr[i];		
-		}
-		else{
-			up[1][i] = up[1][i-1] + arr[i];
-		}
-	}
 
-	for(int i = 3; i <= len; i++){
-		up[2][i] = up[2][i-3] + arr[i];
-	}
+	// for(int i = 1; i <= len; i++){
+	// 	up[0][i] = up[0][i-1] + arr[i];
+	// }
+
+	// for(int i = 2; i <= len; i++){
+	// 	if(i % 2 == 0){
+	// 		up[1][i] = up[1][i-2] + arr[i];		
+	// 	}
+	// 	else{
+	// 		up[1][i] = up[1][i-1] + arr[i];
+	// 	}
+	// }
+
+	// for(int i = 3; i <= len; i++){
+	// 	up[2][i] = up[2][i-3] + arr[i];
+	// }
 
 
 }
@@ -68,21 +88,25 @@ int main()
 	{
 
 		printf("#testcase%d\n",itr+1);
-		result = 0;
+		init();
+
 		scanf("%d",&len);
 		for(int i = 1; i <= len; i++){
 			scanf("%d", &arr[i]);
 		}
 
 		func();
+		// printf("%d\n", result[len]);
+		// for(int i = 0; i <= len; i++){
+		// 	printf("%3d ", arr[i]);
+		// }
+		// printf("\n");
+		// for(int i = 0; i <= len+1; i++){
+		// 	printf("%3d ", result[i]);
+		// }
+		// printf("\n");
+		printf("%d\n", result[len+1]);
 
-		for(int i = 0; i < 3; i++){
-			for(int j = 1; j <= len; j++){
-				printf("%3d ", up[i][j]);
-			}
-			printf("\n");
-		}
-		printf("%d\n", result);
 
 		/*
 
