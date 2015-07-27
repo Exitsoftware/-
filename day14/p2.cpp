@@ -6,15 +6,8 @@ VC, GCC에서 사용
 
 #include <stdio.h>
 
-long long count;
-long long people;
-int arr[5000000];
-
-void init(){
-	for(int i = 0; i < count; i++){
-		arr[i] = 0;
-	}
-}
+int count, people;
+int arr[50000];
 
 int main()
 {
@@ -28,42 +21,55 @@ int main()
 	{
 
 		printf("#testcase%d\n",itr+1);
-		scanf("%lld %lld", &count, &people);
-		init();
 
-		int min;
-
+		scanf("%d %d", &count, &people);
+		int max;
 		for(int i = 0; i < count; i++){
+
 			scanf("%d", &arr[i]);
+
 			if(i == 0){
-				min = arr[i];
+				max = arr[i];
 			}
-			if(min > arr[i]){
-				min = arr[i];
+			if(max < arr[i]){
+				max = arr[i];
 			}
 		}
 
-		// printf("min %d\n",  min);
-
-		long long result;
-		long long result_min;
-
-		for(long long i = min; i >= 0; i--){
-			// printf("?\n");
-			result = 0;
-			// printf("i = %d\n", i);
-			for(long long j = 0; j < count; j++){
-				// printf("??\n");
-				result += arr[j] / i;
+		int d1 = max;
+		int d2 = 0;
+		int d3 = (d1+d2)/2;
+		int res;
+		while(1){
+			// printf("d1 %d d2 %d d3 %d\n", d1, d2, d3);
+			res = 0;
+			for(int i = 0; i < count; i++){
+				res += arr[i]/d3;
 			}
-			// printf("result = %d\n", result);
-			if(result >= people){
-				result_min = i;
+			if(res > people){
+
+				d2 = d3;
+				d3 = (d1+d2)/2;
+			}
+			else if(res < people){
+
+				d1 = d3;
+				d3 = (d1+d2)/2;
+			}
+			// if(res == people){
+			// 	break;
+			// }
+			if(d1 == d3 || d3 == d2){
+				break;
+			}
+			if(res == people){
+				d3++;
 				break;
 			}
 		}
 
-		printf("%lld\n", result_min);
+		printf("%d\n", d3);
+
 	}
 
 	return 0;	/* 반드시 return 0으로 해주셔야합니다. */ 

@@ -1,0 +1,41 @@
+#include <stdio.h>
+ 
+int map[102][102]={};
+int cache[102][102]={};
+int n;
+ 
+int max(int a, int b) {
+    if(a>b)
+        return a;
+    else
+        return b;
+}
+ 
+int scv(int x, int y) {
+    if(x == n && y == n)
+        return map[x][y];
+    if(x > n || y > n)
+        return 0;
+ 
+    if(cache[x][y]!=0)
+        return cache[x][y];
+ 
+    return cache[x][y] = map[x][y]+max(scv(x+1,y), scv(x,y+1));
+}
+ 
+int main() {
+ 
+ 
+ 
+    scanf("%d", &n);
+ 
+    for(int i=1; i<=n; i++)
+        for(int j=1; j<=n; j++)
+            scanf("%d", &map[i][j]);
+ 
+    printf("%d\n", scv(1,1));
+ 
+ 
+    return 0;
+ 
+}

@@ -1,0 +1,111 @@
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+struct Point{
+   double x;
+   double y;
+};
+
+void merge(Point *A, Point*temp, int start, int mid, int last){
+   int s1 = start;
+   int s2 = mid;
+
+   for(int i=start; i<last; i++){
+      if(s1 < mid && (s2 >= last || A[s1].x < A[s2].x || (A[s1].x == A[s2].x && A[s1].y < A[s2].y))){
+         temp[i] = A[s1++];
+      }else
+         temp[i] = A[s2++];
+   }
+}
+
+
+
+void mergesort(Point *A, Point *temp, int start, int last){
+   if(last - start < 2)
+      return;
+
+   int mid = (start + last) / 2;
+
+   mergesort(A, temp, start, mid);
+   mergesort(A, temp, mid, last);
+   merge(A, temp, start, mid, last);
+   for(int i=start; i<last; i++)
+      A[i] = temp[i];
+}
+
+double cross(const Point &O, const Point &A, const Point &B){
+   return (long)(A.x - O.x) * (B.y - A.y) - (long)(A.y - O.y) * (B.x - A.x);
+}
+
+double ABS(Point first, Point second, Point third){
+   double temp = (second.x - first.x) * (third.y - first.y) - (third.x - first.x) * (second.y - first.y);
+
+   if(temp < 0)
+      temp = -temp;
+
+   return (double)temp/2;
+}
+
+int main()
+{
+
+   int nCount;      /* 문제의 테스트 케이스 */
+
+   //cin >> nCount;   /* 테스트 케이스 입력 */
+   scanf("%d", &nCount);
+
+   for(int itr=0; itr<nCount; itr++)
+   {
+
+      //cout << "#testcase" << (itr+1) << endl;
+      printf("#testcase%d\n", (itr+1));
+
+      int n;
+      //cin >> n;
+      scanf("%d", &n);
+
+      Point *A = new Point[n];
+      Point *B = new Point[n];
+      Point *temp = new Point[n];
+
+      for(int i=0; i<n; i++){
+         //cin >> A[i].x >> A[i].y;
+         scanf("%lf %lf", &A[i].x, &A[i].y);
+      }
+
+      mergesort(A, temp, 0, n);
+
+      int k = 0;
+
+      for(int i=0; i<n; i++){
+         while(k>=2 && cross(B[k-2], B[k-1], A[i]) <= 0)
+            k--;
+         B[k++] = A[i];
+      }
+
+      int t = k+1;
+      for(int i=n-2; i>=0; i--){
+         while(k >= t && cross(B[k-2], B[k-1], A[i]) <= 0)
+            k--;
+         B[k++] = A[i];
+      }
+
+      k--;
+
+      //cout << k << endl;
+      double sum = 0.0;
+
+      for(int i=1; i<k; i++){
+         sum += ABS(B[0], B[i], B[i+1]);
+      }
+
+      printf("%.2lf\n", sum);
+
+
+   }
+
+   return 0;   /* 반드시 return 0으로 해주셔야합니다. */ 
+
+}
