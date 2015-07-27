@@ -1,0 +1,157 @@
+#include <stdio.h>
+
+int queue[10000];
+int front = 0, rear = 0;
+int map[1004][1004] = {};
+int knight[1004][1004] = {};
+int horse[1004][1004] = {};
+
+void enqueue(int n) {
+	queue[rear++]=n;
+}
+int dequeue() {
+	return queue[front++];
+}
+
+int main()
+{
+
+	int itr;
+	int nCount;		/* 문제의 테스트 케이스 */
+
+	scanf("%d", &nCount);	/* 테스트 케이스 입력 */
+
+	for(itr=0; itr<nCount; itr++)
+	{
+
+		printf("#testcase%d\n",itr+1);
+
+		int n, k, x, y;
+		
+		scanf("%d %d", &n, &k);
+	
+		for(int i=0; i<1004; i++)
+			for(int j=0; j<1004; j++) {
+				map[i][j]=-1;
+				knight[i][j]=-1;
+				horse[i][j]=-1;
+			}
+
+		for(int i=2; i<=n+1; i++)
+			for(int j=2; j<=n+1; j++) {
+				scanf("%d", &map[i][j]);
+				knight[i][j] = 0;
+				horse[i][j] = 0;
+				if(map[i][j] == 1) {
+					map[i][j] = -1;
+					knight[i][j] = -1;
+					horse[i][j] = -1;
+				}
+			}
+			
+		scanf("%d %d", &x, &y);
+		
+		knight[x+1][y+1] = 1;
+		enqueue((x+1)*10000 + y+1);
+
+		while(front!=rear) {
+			int temp = dequeue();
+			int x1 = temp/10000;
+			int y1 = temp%10000;
+
+			if(knight[x1+2][y1+1] == 0) {
+				enqueue((x1 + 2)*10000 + y1 + 1);
+				knight[x1+2][y1+1] = knight[x1][y1]+1;
+			}
+			if(knight[x1+2][y1-1] == 0) {
+				enqueue((x1 + 2)*10000 + y1 - 1);
+				knight[x1+2][y1-1] = knight[x1][y1]+1;
+			}
+			if(knight[x1-2][y1+1] == 0) {
+				enqueue((x1 - 2)*10000 + y1 + 1);
+				knight[x1-2][y1+1] = knight[x1][y1]+1;
+			}
+			if(knight[x1-2][y1-1] == 0) {
+				enqueue((x1 - 2)*10000 + y1 - 1);
+				knight[x1-2][y1-1] = knight[x1][y1]+1;
+			}
+			if(knight[x1+1][y1+2] == 0) {
+				enqueue((x1 + 1)*10000 + y1 + 2);
+				knight[x1+1][y1+2] = knight[x1][y1]+1;
+			}
+			if(knight[x1+1][y1-2] == 0) {
+				enqueue((x1 + 1)*10000 + y1 - 2);
+				knight[x1+1][y1-2] = knight[x1][y1]+1;
+			}
+			if(knight[x1-1][y1+2] == 0) {
+				enqueue((x1 - 1)*10000 + y1 + 2);
+				knight[x1-1][y1+2] = knight[x1][y1]+1;
+			}
+			if(knight[x1-1][y1-2] == 0) {
+				enqueue((x1 - 1)*10000 + y1 - 2);
+				knight[x1-1][y1-2] = knight[x1][y1]+1;
+			}	
+		}
+
+		front = rear = 0;
+
+		horse[x+1][y+1] = 1;
+		enqueue((x+1)*10000 + y+1);
+
+		while(front!=rear) {
+			int temp = dequeue();
+			int x1 = temp/10000;
+			int y1 = temp%10000;
+			if(horse[x1+2][y1+1] == 0 && horse[x1+1][y1] != -1) {
+				enqueue((x1 + 2)*10000 + y1 + 1);
+				horse[x1+2][y1+1] = horse[x1][y1]+1;
+			}
+			if(horse[x1+2][y1-1] == 0 && horse[x1+1][y1] != -1) {
+				enqueue((x1 + 2)*10000 + y1 - 1);
+				horse[x1+2][y1-1] = horse[x1][y1]+1;
+			}
+			if(horse[x1-2][y1+1] == 0 && horse[x1-1][y1] != -1) {
+				enqueue((x1 - 2)*10000 + y1 + 1);
+				horse[x1-2][y1+1] = horse[x1][y1]+1;
+			}
+			if(horse[x1-2][y1-1] == 0 && horse[x1-1][y1] != -1) {
+				enqueue((x1 - 2)*10000 + y1 - 1);
+				horse[x1-2][y1-1] = horse[x1][y1]+1;
+			}
+			if(horse[x1+1][y1+2] == 0 && horse[x1][y1+1] != -1) {
+				enqueue((x1 + 1)*10000 + y1 + 2);
+				horse[x1+1][y1+2] = horse[x1][y1]+1;
+			}
+			if(horse[x1+1][y1-2] == 0 && horse[x1][y1-1] != -1) {
+				enqueue((x1 + 1)*10000 + y1 - 2);
+				horse[x1+1][y1-2] = horse[x1][y1]+1;
+			}
+			if(horse[x1-1][y1+2] == 0 && horse[x1][y1+1] != -1) {
+				enqueue((x1 - 1)*10000 + y1 + 2);
+				horse[x1-1][y1+2] = horse[x1][y1]+1;
+			}
+			if(horse[x1-1][y1-2] == 0 && horse[x1][y1-1] != -1) {
+				enqueue((x1 - 1)*10000 + y1 - 2);
+				horse[x1-1][y1-2] = horse[x1][y1]+1;
+			}
+
+		}
+
+		front = rear = 0;
+
+		int count=0;
+
+		for(int i=2; i<=n+1; i++)
+			for(int j=2; j<=n+1; j++) {
+				if(knight[i][j] < horse[i][j])
+					count++;
+				if(horse[i][j]==0 && knight[i][j]!=0)
+					count++;
+			}
+
+		printf("%d\n",count);
+	}
+
+	return 0;	/* 반드시 return 0으로 해주셔야합니다. */ 
+
+}

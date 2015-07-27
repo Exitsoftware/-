@@ -1,0 +1,68 @@
+
+#include <stdio.h>
+int arr[300][300];
+
+bool move(int x, int y) {
+	int val = arr[x][y];
+	bool ret1, ret2;
+
+	if(arr[x+val][y]==0 || arr[x][y+val]==0 || arr[x+val][y]==-1 || arr[x][y+val]==-1 ) {
+		arr[x][y] = -1;
+		return true;
+	}
+	if(arr[x+val][y]==-2 && arr[x][y+val]==-2) {
+		arr[x][y] = -2;
+		return false;
+	}
+
+	if(arr[x+val][y] == -2) {
+		ret1 = false;
+	} else {
+		ret1 = move(x+val,y);
+	}
+	if(arr[x][y+val] == -2) {
+		ret2 = false;
+	} else {
+		ret2 = move(x,y+val);
+	}
+	
+	arr[x][y] = (ret1 || ret2)?-1:-2;
+	
+	return (ret1 || ret2);
+}
+
+int main()
+{
+
+	int itr;
+	int nCount;		/* 문제의 테스트 케이스 */
+
+	scanf("%d", &nCount);	/* 테스트 케이스 입력 */
+
+	for(itr=0; itr<nCount; itr++)
+	{
+
+		printf("#testcase%d\n",itr+1);
+
+		for(int i=0; i<300; i++)
+			for(int j=0; j<300; j++)
+				arr[i][j] = -2;
+
+		int n;
+		
+		scanf("%d", &n);
+		
+		for(int i=1; i<= n ; i++)
+			for(int j=1; j<= n; j++)
+				scanf("%d", &arr[i][j]);
+
+
+		if(move(1,1))
+			printf("YES\n");
+		else
+			printf("NO\n");	
+	}
+
+	return 0;	/* 반드시 return 0으로 해주셔야합니다. */ 
+
+}
